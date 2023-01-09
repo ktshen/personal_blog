@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#0288d1">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-loading-bar.min.css?v=1.0.2">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Yesteryear:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon.ico?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.ico?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon.ico?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/assets/favicon.ico?v=7.1.1" color="#0288d1">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: true,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="給予一個陣列arr，在有以下兩個請求時，可以透過binary indexed tree 加速運算速度  (Update) add x to arr[index] (Sum) find the sum from arr[L] to arr[R]   $index=1...N$  $f[i]=$ **frequency of each index ** $c[i]=$ **cummulation fr">
+<meta name="keywords" content="Data Structures,Hackerrank">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Binary Indexed Tree">
+<meta property="og:url" content="https://ktshentw.tk/2016/07/02/Binary Indexed Tree/index.html">
+<meta property="og:site_name" content="KT&#39;s Space">
+<meta property="og:description" content="給予一個陣列arr，在有以下兩個請求時，可以透過binary indexed tree 加速運算速度  (Update) add x to arr[index] (Sum) find the sum from arr[L] to arr[R]   $index=1...N$  $f[i]=$ **frequency of each index ** $c[i]=$ **cummulation fr">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://ktshentw.tk/Binary%20Indexed%20Tree/9385E82DD2EEB5AB2AB9C2BABDD9CDA5.gif">
+<meta property="og:image" content="https://ktshentw.tk/Binary%20Indexed%20Tree/17D73226B1C6E38DC57F3305CB3A4FE3.jpg">
+<meta property="og:image" content="https://ktshentw.tk/Binary%20Indexed%20Tree/similarpairsExample.png">
+<meta property="og:image" content="https://ktshentw.tk/Binary%20Indexed%20Tree/BA897C1126BE8DC856F1F1EE1090A016.png">
+<meta property="og:updated_time" content="2019-06-21T06:36:40.604Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Binary Indexed Tree">
+<meta name="twitter:description" content="給予一個陣列arr，在有以下兩個請求時，可以透過binary indexed tree 加速運算速度  (Update) add x to arr[index] (Sum) find the sum from arr[L] to arr[R]   $index=1...N$  $f[i]=$ **frequency of each index ** $c[i]=$ **cummulation fr">
+<meta name="twitter:image" content="https://ktshentw.tk/Binary%20Indexed%20Tree/9385E82DD2EEB5AB2AB9C2BABDD9CDA5.gif">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://ktshentw.tk/2016/07/02/Binary Indexed Tree/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Binary Indexed Tree | KT's Space</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">KT's Space</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ktshentw.tk/2016/07/02/Binary Indexed Tree/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="KT Shen">
+      <meta itemprop="description" content="Just some thoughts and notes.">
+      <meta itemprop="image" content="/assets/profile.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="KT's Space">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Binary Indexed Tree
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2016-07-02 14:13:00" itemprop="dateCreated datePublished" datetime="2016-07-02T14:13:00+08:00">2016-07-02</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithms/" itemprop="url" rel="index"><span itemprop="name">Algorithms</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>給予一個陣列arr，在有以下兩個請求時，可以透過binary indexed tree 加速運算速度</p>
+<ol>
+<li>(Update) add x to arr[index]</li>
+<li>(Sum) find the sum from arr[L] to arr[R]</li>
+</ol>
+<hr>
+<span>$index=1...N$</span><!-- Has MathJax --> <br>
+<span>$f[i]=$</span><!-- Has MathJax --> **frequency of each index **<br>
+<span>$c[i]=$</span><!-- Has MathJax --> **cummulation from index 1 to index i**<br>
+<span>$tree[i]=$</span><!-- Has MathJax --> 在tree各自負責區段的總和 
+
+<p>usually we will set index 0 as dummy, f[0]=0, c[0] =0</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">num  1  2  3  4  5  6   7   8  9  10  11  12  13  14  15  16</span><br><span class="line"></span><br><span class="line">f    1  0  2  1  1  3   0   4  2   5   2   2   3   1  0    2</span><br><span class="line"></span><br><span class="line">c    1  1  3  4  5  8   8  12 14  19  21  23  26  27  27  29</span><br><span class="line"></span><br><span class="line">tree 1  1  2  4  1  4   0  12  2   7   2  11   3   4   0  29</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<p align="center">
+<img src="/Binary Indexed Tree/9385E82DD2EEB5AB2AB9C2BABDD9CDA5.gif">
+</p>
+BIT (according to the graph above)
+<p align="center">
+<img src="/Binary Indexed Tree/17D73226B1C6E38DC57F3305CB3A4FE3.jpg" width="400" height="400">
+</p>
+
+<hr>
+<p>在BIT當中，每一個Node都存放著自己負責“區段”的總和。</p>
+<p>將index轉換成binary representation後，透過binary number有幾個1，來尋找從<span>$1 \Rightarrow index$</span><!-- Has MathJax -->的總和</p>
+<p>若某一個Node的index = idx， 則其存放的總和 <span>$= idx - 2^r +1 \Rightarrow idx$</span><!-- Has MathJax --> ( r是該idx從左而右最後一個1的位置）</p>
+<p>e.g. 譬如idx = 13;</p>
+<p>13 = 01101， 最後一個1的位置是0th（由右而作從零開始，所以Node 13負責的總和為 <span>$index = 13-2^0+1 = 13 \Rightarrow 13$</span><!-- Has MathJax -->，負責自己的Node)</p>
+<p>(if idx = 12, 其負責的總和為<span>$index = 12-2^2+1 = 9 \Rightarrow 12$</span><!-- Has MathJax -->)</p>
+<p>換句話說，就是 <code>(自己的left subtree + 自己的frequency)</code></p>
+<p>若要求得c[13] = c[01101] = tree[01101] + tree[01100] + tree[01000]</p>
+<p>由此可知，皆是從Node移動到Root</p>
+<ul>
+<li>BIT的主要概念即是給一個index 轉換成binary後，若要得知從1至該index的總和，就是把binary index 從右至左每次把最右邊的1砍掉後（刪去最低為的1)，全部的總和。</li>
+<li>如此作法可以比通常各Node是從1……index全部加起來還要快，因為此方法是看binary index 中有多少個1，就加多少個Node即可，不需要從頭到尾累加。</li>
+<li>只可以更新數值，不能插入新的節點</li>
+</ul>
+<hr>
+<h3 id="如何得到最低位的1-Rightmost-Set-bit"><a href="#如何得到最低位的1-Rightmost-Set-bit" class="headerlink" title="如何得到最低位的1(Rightmost Set bit) ?"></a>如何得到最低位的1(Rightmost Set bit) ?</h3><p><code>index &amp; -index</code></p>
+<p>Proof:</p>
+<p>if index = A(anything)1B(all zero) = (…101110101) 1 (000000000….)</p>
+<p>-index = <strong>(A1B)¯ + 1 **</strong>(to get the negative binary number of a specific index, take complement and add 1) num<strong>**¯ = complement of num</strong></p>
+<p>** = A¯0B¯ + 1 (since B = (1111111…), if we add 1, then B = (000000), and 0 becomes 1)**</p>
+<p>** = ***<em>A¯1B *</em></p>
+<hr>
+<h3 id="Sum"><a href="#Sum" class="headerlink" title="Sum:"></a>Sum:</h3><p>given an index, go from node to root to find the summation </p>
+<p>從BIT 樹圖分析，</p>
+<p>從Node開始，若是這個Node是parent 的left tree, 則不需要將sum+=tree[index]</p>
+<p>若是這個Node是parent 的right tree, 則需要將sum+=tree[index]</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getSum</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;BIT, <span class="keyword">int</span> index)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(index&gt;<span class="number">0</span>)&#123;</span><br><span class="line">        sum += BIT[index];</span><br><span class="line">        index -= (index &amp; -index);    <span class="comment">//刪去最低位的1</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="Update"><a href="#Update" class="headerlink" title="Update:"></a>Update:</h3><p>跟Sum類似，更新有負責(包含)到該index的Node</p>
+<p>換句話說，若是該Node是parent’s left child的話，則需要更新parent</p>
+<p>若是該Node是parent’s right child的話，則不需要更新parent</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">update</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; BIT, <span class="keyword">int</span> index, <span class="keyword">int</span> addition)</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(index &lt; BIT.size())&#123;      <span class="comment">//index &lt; size of the tree</span></span><br><span class="line">        BIT[index] += addition;</span><br><span class="line">        index += (index &amp; -index);  <span class="comment">//將最低位的1加1，就可以找到parent</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="Get-single-node-frequency"><a href="#Get-single-node-frequency" class="headerlink" title="Get single node frequency"></a>Get single node frequency</h3><p>最直覺的方式就是 f[index] = c[index] - c[index-1]，意思就是跑兩次Sum;</p>
+<p>但如何可以只跑一次就好？</p>
+<p>c[index] 和 c[index-1] 一定有相同的</p>
+<p>if index = x = A1B<strong>¯</strong> , then y = index - 1 = A0B</p>
+<p>從這邊可以看出 </p>
+<p> c[x] = c[A0<strong>B¯</strong>] + tree[A1B<strong>¯</strong>] ,</p>
+<p> c[y] = c[A0<strong>B¯</strong>] + tree[A0(111…111)] + tree[A0(111..110] + tree[A0(111..100] + ………</p>
+<p>=&gt; c[x] - c[y] = tree[A1B<strong>¯</strong>] - { tree[A0(111…111)] + tree[A0(111..110] + tree[A0(111..100] + ………}</p>
+<p>所以當y開始一直刪去最低位的1後，最後 y 會變成A0B¯(common predecessor ) ，也就是停止的時候。</p>
+<p>＊換句話說，將x負責的區段一直刪去只剩下f[x]而已</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getFrequency</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; BIT, <span class="keyword">int</span> index)</span></span>&#123;   <span class="comment">//index!=0</span></span><br><span class="line">    <span class="keyword">int</span> sum = BIT[index];        <span class="comment">//set sum = tree[index]</span></span><br><span class="line">    <span class="keyword">int</span> common_pre = index - (index &amp; -index);    <span class="comment">//find common predecessor</span></span><br><span class="line">    index--;        <span class="comment">//index is not important anymore, we could use it as our variable</span></span><br><span class="line">    <span class="keyword">while</span>(index != common_pre)&#123;     <span class="comment">//after deleting the rightmost set bit, it will become common_pre</span></span><br><span class="line">        sum -= BIT[index];</span><br><span class="line">        index -= (index &amp; -index);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getSum</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;BIT, <span class="keyword">int</span> index)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(index&gt;<span class="number">0</span>)&#123;</span><br><span class="line">        sum += BIT[index];</span><br><span class="line">        index -= (index &amp; -index);    <span class="comment">//刪去最低位的1</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;BIT, <span class="keyword">int</span> index, <span class="keyword">int</span> addition)</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(index &lt; BIT.size())&#123;      <span class="comment">//index &lt; size of the tree</span></span><br><span class="line">        BIT[index] += addition;</span><br><span class="line">        index += (index &amp; -index);  <span class="comment">//將最低位的1加1，就可以找到parent</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getFrequency</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; BIT, <span class="keyword">int</span> index)</span></span>&#123;   <span class="comment">//index!=0</span></span><br><span class="line">    <span class="keyword">int</span> sum = BIT[index];        <span class="comment">//set sum = tree[index]</span></span><br><span class="line">    <span class="keyword">int</span> common_pre = index - (index &amp; -index);    <span class="comment">//find common predecessor</span></span><br><span class="line">    index--;        <span class="comment">//index is not important anymore, we could use it as our variable</span></span><br><span class="line">    <span class="keyword">while</span>(index != common_pre)&#123;     <span class="comment">//after deleting the rightmost set bit, it will become common_pre</span></span><br><span class="line">        sum -= BIT[index];</span><br><span class="line">        index -= (index &amp; -index);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">printTree</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;BIT)</span></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"i    "</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;BIT.size(); i++) <span class="built_in">cout</span>&lt;&lt;setw(<span class="number">3</span>)&lt;&lt;i;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"F    "</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">1</span>; k&lt;BIT.size(); k++)</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;setw(<span class="number">3</span>)&lt;&lt;getFrequency(BIT, k);</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"C    "</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> t=<span class="number">1</span>; t&lt;BIT.size(); t++)</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;setw(<span class="number">3</span>)&lt;&lt;getSum(BIT, t);</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"Tree "</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> p=<span class="number">1</span>; p&lt;BIT.size(); p++)</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;setw(<span class="number">3</span>)&lt;&lt;BIT[p];</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; constructBIT(<span class="keyword">int</span> arr[], <span class="keyword">int</span> N)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; BIT(N+<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;=N; i++) BIT[i] = <span class="number">0</span>;  <span class="comment">//initialize tree</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;N; j++)</span><br><span class="line">        update(BIT, j+<span class="number">1</span>, arr[j]);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> BIT;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> N = <span class="number">16</span>;   <span class="comment">//length of frequecy array</span></span><br><span class="line">    <span class="keyword">int</span> freq_arr[] =  &#123; <span class="number">1</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">2</span>&#125;;  <span class="comment">//given data</span></span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; BITree = constructBIT(freq_arr, N);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* use to demontrate */</span></span><br><span class="line">    printTree(BITree);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Hackerrank-Similar-Pair"><a href="#Hackerrank-Similar-Pair" class="headerlink" title="Hackerrank: Similar Pair"></a><span class="exturl" data-url="aHR0cHM6Ly93d3cuaGFja2VycmFuay5jb20vY2hhbGxlbmdlcy9zaW1pbGFycGFpci9wcm9ibGVt" title="https://www.hackerrank.com/challenges/similarpair/problem">Hackerrank: Similar Pair<i class="fa fa-external-link"></i></span></h3><p>A pair of nodes, <strong><em>(a,b)</em></strong>, is a <em>similar pair</em> if both of the following conditions are true:</p>
+<ol>
+<li>Node <strong><em>a</em></strong> is the ancestor of node <strong><em>b</em></strong></li>
+<li><span>$abs(a-b) \leqslant k$</span><!-- Has MathJax -->
+
+</li>
+</ol>
+<p>Given a tree where each node is labeled from <strong><em>1</em></strong> to <strong><em>n</em></strong> , find the number of similar pairs in the tree.</p>
+<p>For example, given the following tree:</p>
+<p align="center">
+<img src="/Binary Indexed Tree/similarpairsExample.png" width="200" height="250">
+</p>
+
+
+<p>We have the following pairs of ancestors and dependents:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Pair      abs(a-b)</span><br><span class="line">1,2         1</span><br><span class="line">1,3         2</span><br><span class="line">1,4         3</span><br><span class="line">1,5         4</span><br><span class="line">1,6         5</span><br><span class="line">3,4         1</span><br><span class="line">3,5         2</span><br><span class="line">3,6         3</span><br></pre></td></tr></table></figure>
+
+<p>If <strong><em>k=3</em></strong> for example, we have <strong>6</strong> pairs that are similar, where <span>$abs(a,b) \leqslant k$</span><!-- Has MathJax -->.</p>
+<p><strong>Function Description</strong></p>
+<p>Complete the similarPair function in the editor below. It should return an integer that represents the number of pairs meeting the criteria.</p>
+<p>similarPair has the following parameter(s):</p>
+<ul>
+<li>n: an integer that represents the number of nodes</li>
+<li>k: an integer</li>
+<li>edges: a two dimensional array where each element consists of two integers that represent connected node numbers</li>
+</ul>
+<p><strong>Input Format</strong></p>
+<p>The first line contains two space-separated integers <strong>n</strong> and  <strong>k</strong> , the number of nodes and the similarity threshold.<br>Each of the next <strong>n-1</strong> lines contains two space-separated integers defining an edge connecting nodes  <strong>p[i]</strong>  and <strong>c[i]</strong>, where node <strong>p[i]</strong> is the parent to node <strong>c[i]</strong>.</p>
+<p><strong>Constraints</strong></p>
+<ul>
+<li><span>$1 \leqslant n \leqslant 10^5$</span><!-- Has MathJax --> </li>
+<li><span>$0 \leqslant k \leqslant n$</span><!-- Has MathJax --> </li>
+<li><span>$1 \leqslant p[i], c[i] \leqslant n$</span><!-- Has MathJax --> 
+
+
+</li>
+</ul>
+<p><strong>Output Format</strong></p>
+<p>Print a single integer denoting the number of similar pairs in the tree.</p>
+<p><strong>Sample Input</strong></p>
+<pre>
+5 2
+3 2
+3 1
+1 4
+1 5
+</pre>
+
+<p><strong>Sample Output</strong></p>
+<pre>
+4
+</pre>
+
+<p><strong>Explanation</strong></p>
+<p>The similar pairs are <strong>(3,2)</strong>, <strong>(3,1)</strong>, <strong>(3,4)</strong>, and <strong>(3,5)</strong>, so we print <strong>4</strong> as our answer. Observe that <strong>(1,4)</strong> and <strong>(1,5)</strong> are <em>not</em> similar pairs because they do not satisfy <span>$abs(a,b) \leqslant k$</span><!-- Has MathJax --> for <span>$k=2$</span><!-- Has MathJax -->.</p>
+<p align="center">
+<img src="/Binary Indexed Tree/BA897C1126BE8DC856F1F1EE1090A016.png" width="250" height="300">
+</p>
+
+
+<p><strong>Solution</strong></p>
+<ol>
+<li>先建構好題目要的樹（不是BIT)。</li>
+<li>BIT的用途是，透過存放parent index至BIT，使其Child在尋找他所需要的範圍時(child+k, child-k)，可以透過Sum，統計在這個範圍裡parent 的 total</li>
+<li>每次訪問一個Node的時候，先問BIT該Node index的 index+k and index-K這個範圍當中，有多少，然後將加到similar pair</li>
+<li>接著就將Node 的index 更新(該index於BIT +1)</li>
+<li>然後再用Recursive 跑這個Node的Child</li>
+<li>跑完全部該Node的child後，又更新一次Node index (-1)</li>
+<li>所以由此可以確保每次訪問BIT時，BIT裡面的各Index一定是該Node的ancestor</li>
+<li>如此可以不需要一個一個和parent比對，因為若有M個ancestor，則只需要花Olog(M)的時間來找到該Node的similiar pair，而非O(M)</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//bt : bit array</span></span><br><span class="line"><span class="comment">//i and j are starting and ending index INCLUSIVE</span></span><br><span class="line"><span class="function"><span class="keyword">long</span> <span class="keyword">long</span> <span class="title">bit_q</span><span class="params">(<span class="keyword">long</span> <span class="keyword">long</span> * bt,<span class="keyword">int</span> i,<span class="keyword">int</span> j)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//尋找範圍裡的總數</span></span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> sum=<span class="number">0l</span>l;</span><br><span class="line">    <span class="keyword">while</span>(j&gt;<span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        sum+=bt[j];</span><br><span class="line">        j -= (j &amp; (j*<span class="number">-1</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    i--;</span><br><span class="line">    <span class="keyword">while</span>(i&gt;<span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        sum-=bt[i];</span><br><span class="line">        i -= (i &amp; (i*<span class="number">-1</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//bt : binary indexed tree</span></span><br><span class="line"><span class="comment">//n : size of bit array</span></span><br><span class="line"><span class="comment">//i is the index to be updated</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bit_up</span><span class="params">(<span class="keyword">long</span> <span class="keyword">long</span> * bt,<span class="keyword">int</span> n,<span class="keyword">int</span> i,<span class="keyword">long</span> <span class="keyword">long</span> diff)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(i&lt;=n)</span><br><span class="line">    &#123;</span><br><span class="line">        bt[i] += diff;</span><br><span class="line">        i += (i &amp; (i*<span class="number">-1</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n,k;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; al[<span class="number">100005</span>]; <span class="comment">//adjacency list</span></span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> similar_pair;</span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> bit[<span class="number">100005</span>];     <span class="comment">//binary indexed tree</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> node)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    similar_pair += bit_q(bit,max(<span class="number">1</span>,node-k),min(n,node+k));</span><br><span class="line">    bit_up(bit,n,node,<span class="number">1</span>);       <span class="comment">//將該index在binary indexed tree 的值+1，換句話說就是將index push to bit</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;al[node].size();i++)</span><br><span class="line">    	dfs(al[node][i]);</span><br><span class="line">	bit_up(bit,n,node,<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x,y;</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;n&gt;&gt;k;</span><br><span class="line">    similar_pair=<span class="number">0</span>;   <span class="comment">//answer</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=n;i++)   <span class="comment">//initialize binary indexed tree</span></span><br><span class="line">        bit[i]=<span class="number">0l</span>l;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> r ;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n<span class="number">-1</span>;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cin</span>&gt;&gt;x&gt;&gt;y;</span><br><span class="line">        <span class="keyword">if</span>(i==<span class="number">0</span>) r=x;      <span class="comment">//the first one is root</span></span><br><span class="line">        al[x].push_back(y);   </span><br><span class="line">    &#125;</span><br><span class="line">    dfs(r);</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;similar_pair&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Data-Structures/" rel="tag"># Data Structures</a>
+          
+            <a href="/tags/Hackerrank/" rel="tag"># Hackerrank</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/29/Implicit Treap/" rel="next" title="Implicit Treap">
+                <i class="fa fa-chevron-left"></i> Implicit Treap
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/12/Union-Find Algorithm/" rel="prev" title="Union-Find Algorithm">
+                Union-Find Algorithm <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/assets/profile.jpeg" alt="KT Shen">
+            
+              <p class="site-author-name" itemprop="name">KT Shen</p>
+              <div class="site-description motion-element" itemprop="description">Just some thoughts and notes.</div>
+          </div>
+
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2t0c2hlbg==" title="GitHub &rarr; https://github.com/ktshen"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="bWFpbHRvOmt0c2hlbi50d0BnbWFpbC5jb20=" title="Mail &rarr; mailto:ktshen.tw@gmail.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly93d3cuZmFjZWJvb2suY29tL2t0c2hlbnR3" title="Facebook &rarr; https://www.facebook.com/ktshentw"><i class="fa fa-fw fa-facebook"></i>Facebook</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9pbnN0YWdyYW0uY29tL2t0c2hlbnR3" title="Instagram &rarr; https://instagram.com/ktshentw"><i class="fa fa-fw fa-instagram"></i>Instagram</span>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何得到最低位的1-Rightmost-Set-bit"><span class="nav-number">1.</span> <span class="nav-text">如何得到最低位的1(Rightmost Set bit) ?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sum"><span class="nav-number">2.</span> <span class="nav-text">Sum:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Update"><span class="nav-number">3.</span> <span class="nav-text">Update:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Get-single-node-frequency"><span class="nav-number">4.</span> <span class="nav-text">Get single node frequency</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hackerrank-Similar-Pair"><span class="nav-number">5.</span> <span class="nav-text">Hackerrank: Similar Pair</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KT Shen</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom">隱約雷鳴，陰霾天空，但盼風雨來，能留你在此</div>
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.1"></script>
+
+  <script src="/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.1"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.1"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.1"></script>
+<script src="/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+  <script src="/js/exturl.js?v=7.1.1"></script>
+
+
+  
+
+  
+  
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://ktshentw.tk/2016/07/02/Binary Indexed Tree/";
+    this.page.identifier = "2016/07/02/Binary Indexed Tree/";
+    this.page.title = 'Binary Indexed Tree';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://ktshentw-tk.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    loadComments();
+  
+</script>
+
+
+
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

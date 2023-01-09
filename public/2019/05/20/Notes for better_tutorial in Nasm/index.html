@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#0288d1">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-loading-bar.min.css?v=1.0.2">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Yesteryear:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon.ico?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.ico?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon.ico?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/assets/favicon.ico?v=7.1.1" color="#0288d1">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: true,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="This note is based on the tutorial of this project Chapter 1 &amp;amp; 2NASM Data Type   Type Meaning Size    db Define byte 1 byte   dw Define word 2 bytes   dd Define double word 4 bytes   dq Define qua">
+<meta name="keywords" content="NASM,Assembly">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Notes for better_tutorial in Nasm">
+<meta property="og:url" content="https://ktshentw.tk/2019/05/20/Notes for better_tutorial in Nasm/index.html">
+<meta property="og:site_name" content="KT&#39;s Space">
+<meta property="og:description" content="This note is based on the tutorial of this project Chapter 1 &amp;amp; 2NASM Data Type   Type Meaning Size    db Define byte 1 byte   dw Define word 2 bytes   dd Define double word 4 bytes   dq Define qua">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-06-21T06:36:40.608Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Notes for better_tutorial in Nasm">
+<meta name="twitter:description" content="This note is based on the tutorial of this project Chapter 1 &amp;amp; 2NASM Data Type   Type Meaning Size    db Define byte 1 byte   dw Define word 2 bytes   dd Define double word 4 bytes   dq Define qua">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://ktshentw.tk/2019/05/20/Notes for better_tutorial in Nasm/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Notes for better_tutorial in Nasm | KT's Space</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">KT's Space</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ktshentw.tk/2019/05/20/Notes for better_tutorial in Nasm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="KT Shen">
+      <meta itemprop="description" content="Just some thoughts and notes.">
+      <meta itemprop="image" content="/assets/profile.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="KT's Space">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Notes for better_tutorial in Nasm
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-05-20 15:02:24" itemprop="dateCreated datePublished" datetime="2019-05-20T15:02:24+08:00">2019-05-20</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Notes/" itemprop="url" rel="index"><span itemprop="name">Notes</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>This note is based on the tutorial of <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2hlLW1hdC9iZXR0ZXJfdHV0b3JpYWw=" title="https://github.com/he-mat/better_tutorial">this project<i class="fa fa-external-link"></i></span></p>
+<h1 id="Chapter-1-amp-2"><a href="#Chapter-1-amp-2" class="headerlink" title="Chapter 1 &amp; 2"></a>Chapter 1 &amp; 2</h1><h2 id="NASM-Data-Type"><a href="#NASM-Data-Type" class="headerlink" title="NASM Data Type"></a><span class="exturl" data-url="aHR0cHM6Ly9uZWtvc2VjdXJpdHkuY29tL3g4Ni02NC1hc3NlbWJseS9wYXJ0LTQtZGF0YS10eXBlcw==" title="https://nekosecurity.com/x86-64-assembly/part-4-data-types">NASM Data Type<i class="fa fa-external-link"></i></span></h2><table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Meaning</th>
+<th>Size</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>db</td>
+<td>Define byte</td>
+<td>1 byte</td>
+</tr>
+<tr>
+<td>dw</td>
+<td>Define word</td>
+<td>2 bytes</td>
+</tr>
+<tr>
+<td>dd</td>
+<td>Define double word</td>
+<td>4 bytes</td>
+</tr>
+<tr>
+<td>dq</td>
+<td>Define quad word</td>
+<td>8 bytes</td>
+</tr>
+<tr>
+<td>dt</td>
+<td>Define ten bytes</td>
+<td>10 bytes</td>
+</tr>
+</tbody></table>
+<a id="more"></a>
+
+<h2 id="global-directive"><a href="#global-directive" class="headerlink" title="global directive"></a><span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9hLzE3ODk5MDQ4LzY3NDI2OTE=" title="https://stackoverflow.com/a/17899048/6742691"><em>global</em> directive<i class="fa fa-external-link"></i></span></h2><ul>
+<li><p>NASM specific  </p>
+</li>
+<li><p>entry point in executable file  </p>
+</li>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly9uYXNtLnVzL2RvYy9uYXNtZG9jNy5odG1sI3NlY3Rpb24tNy40LjY=" title="https://nasm.us/doc/nasmdoc7.html#section-7.4.6">default entry point name<i class="fa fa-external-link"></i></span>: _start </p>
+</li>
+<li><p>to change the entry point name, specify -e parameter</p>
+<p><code>ld -e my_entry_point -o out a.o</code> </p>
+</li>
+</ul>
+<h2 id="int-80h-amp-syscall"><a href="#int-80h-amp-syscall" class="headerlink" title="int 80h &amp; syscall"></a><span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9hLzEyODA2OTEwLzY3NDI2OTE=" title="https://stackoverflow.com/a/12806910/6742691">int 80h &amp; syscall<i class="fa fa-external-link"></i></span></h2><ul>
+<li><p>syscall is invalid on 32-bit , only on x86-64</p>
+</li>
+<li><p><code>int 0x80</code> is a legacy way to invoke a system call and should be avoided.</p>
+</li>
+<li><p>vSDO: <span class="exturl" data-url="aHR0cDovL2FkYW04MTU3LmluZm8vYmxvZy8yMDExLzEwL2xpbnV4LXZkc28v" title="http://adam8157.info/blog/2011/10/linux-vdso/">1<i class="fa fa-external-link"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9jbG91ZC50ZW5jZW50LmNvbS9kZXZlbG9wZXIvYXJ0aWNsZS8xMDczOTA5" title="https://cloud.tencent.com/developer/article/1073909">2<i class="fa fa-external-link"></i></span></p>
+</li>
+<li><p><span class="exturl" data-url="aHR0cDovL2FydGljbGVzLm1hbnVnYXJnLmNvbS9zeXN0ZW1jYWxsaW5saW51eDJfNi5odG1s" title="http://articles.manugarg.com/systemcallinlinux2_6.html">sysenter<i class="fa fa-external-link"></i></span></p>
+</li>
+</ul>
+<h2 id="CR-LF"><a href="#CR-LF" class="headerlink" title="CR/LF"></a><span class="exturl" data-url="aHR0cHM6Ly9rbm93bGVkZ2UubmkuY29tL0tub3dsZWRnZUFydGljbGVEZXRhaWxzP2lkPWtBMDBaMDAwMDAxOUtaRFNBMg==" title="https://knowledge.ni.com/KnowledgeArticleDetails?id=kA00Z0000019KZDSA2">CR/LF<i class="fa fa-external-link"></i></span></h2><ul>
+<li><p><code>0Ah</code> is <strong>L</strong>ine <strong>F</strong>eed character, equals<code>\n</code>.  將游標向下移，但不回到句首</p>
+</li>
+<li><p><code>0Dh</code> is <strong>C</strong>arriage <strong>R</strong>eturn character, equals <code>\r</code>. 將游標移到該行的句首</p>
+</li>
+</ul>
+<h1 id="Chapter-3"><a href="#Chapter-3" class="headerlink" title="Chapter 3"></a>Chapter 3</h1><h2 id="CMP"><a href="#CMP" class="headerlink" title="CMP"></a>CMP</h2><p><code>cmp destination, source</code>   其實就等於 <code>destination - source</code></p>
+<p>CMP instruction would change Zero, Carry, Overflow, Auxiliary and Parity flags.</p>
+<p>Unsigned integer operation</p>
+<table>
+<thead>
+<tr>
+<th>CMP Results</th>
+<th>ZF</th>
+<th>CF</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Destination &lt; Source</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Destination &gt; Source</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Destination = Source</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p>Signed integer operation</p>
+<table>
+<thead>
+<tr>
+<th>CMP Results</th>
+<th>Flags</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Destination &lt; Source</td>
+<td>SF = OF</td>
+</tr>
+<tr>
+<td>Destination &gt; Source</td>
+<td>SF ≠ OF</td>
+</tr>
+<tr>
+<td>Destination = Source</td>
+<td>ZF = 1</td>
+</tr>
+</tbody></table>
+<h2 id="JZ"><a href="#JZ" class="headerlink" title="JZ"></a>JZ</h2><p><code>jz &lt;label&gt;</code>  jump to label if ZF = 1</p>
+<h2 id="INC"><a href="#INC" class="headerlink" title="INC"></a>INC</h2><p><code>inc operand</code>   operand + 1 byte</p>
+<h2 id="EFLAGS-Register"><a href="#EFLAGS-Register" class="headerlink" title="EFLAGS Register"></a><span class="exturl" data-url="aHR0cDovL2ZpbmFsZnJhbmsucGl4bmV0Lm5ldC9ibG9nL3Bvc3QvMjI5OTIxNjYteDg2LWNwdS3mmqvlrZjlmagtcmVnaXN0ZXIt5aSn5YWo" title="http://finalfrank.pixnet.net/blog/post/22992166-x86-cpu-暫存器-register-大全">EFLAGS Register<i class="fa fa-external-link"></i></span></h2><h3 id="Zero-Flag"><a href="#Zero-Flag" class="headerlink" title="Zero Flag"></a>Zero Flag</h3><p>The flag is set when the result of an operation generates a result of zero</p>
+<h3 id="Carry-Flag"><a href="#Carry-Flag" class="headerlink" title="Carry Flag"></a>Carry Flag</h3><ul>
+<li><strong>Unsigned</strong> arithmetic operation</li>
+<li>The flag is set in two situations<ul>
+<li>兩者相加的結果（大小）大於Register能存放的空間</li>
+<li>當小數減掉大數時。<ul>
+<li>00000001 - 00000010 = 11111111  and CF is set (表示負號，因為是Unsigned)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Overflow-Flag"><a href="#Overflow-Flag" class="headerlink" title="Overflow Flag"></a>Overflow Flag</h3><p>與Carry Flag相同，但用於<strong>Signed</strong> arithmetic operation</p>
+<h3 id="Auxiliary-Flag"><a href="#Auxiliary-Flag" class="headerlink" title="Auxiliary Flag"></a><span class="exturl" data-url="aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvQWRqdXN0X2ZsYWc=" title="https://en.wikipedia.org/wiki/Adjust_flag">Auxiliary Flag<i class="fa fa-external-link"></i></span></h3><h3 id="Sign-Flag"><a href="#Sign-Flag" class="headerlink" title="Sign Flag"></a>Sign Flag</h3><p>when the result of an operation generates a negative result</p>
+<h3 id="Parity-Flag"><a href="#Parity-Flag" class="headerlink" title="Parity Flag"></a>Parity Flag</h3><p>以<code>11101101</code>做例子，因為有6個1，是偶數個，所以PF=1</p>
+<h1 id="Chapter-5"><a href="#Chapter-5" class="headerlink" title="Chapter 5"></a>Chapter 5</h1><p><code>%include &quot;&lt;filename.inc&gt;&quot;</code>    Include other source files into current code，類似C的include.   <span class="exturl" data-url="aHR0cHM6Ly9uYXNtLnVzL2RvYy9uYXNtZG9jNC5odG1sI3NlY3Rpb24tNC42LjE=" title="https://nasm.us/doc/nasmdoc4.html#section-4.6.1">Reference<i class="fa fa-external-link"></i></span></p>
+<h1 id="Chapter-6"><a href="#Chapter-6" class="headerlink" title="Chapter 6"></a>Chapter 6</h1><p><code>sys_write</code> 以 <code>0h</code> (NULL byte) 作為string終止符號(而非<code>0Ah</code> or <code>0Dh</code>)。所以如果想要<code>sys_write</code>在data段某個string，但是若每一個string最後都沒有以<code>0h</code>做結尾，那將會印出從給予位置到第一個null byte才會結束。</p>
+<h1 id="Chapter-9"><a href="#Chapter-9" class="headerlink" title="Chapter 9"></a>Chapter 9</h1><h2 id="Section-bss"><a href="#Section-bss" class="headerlink" title="Section .bss"></a>Section .bss</h2><ul>
+<li><p><strong>B</strong>lock <strong>S</strong>tarted by <strong>S</strong>ymbol</p>
+</li>
+<li><p>用於存放尚未初始化的變數。該段通常只包含變數名以及其長度(大小)</p>
+</li>
+<li><p>e.g.</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SECTION .bss</span><br><span class="line">variableName1:      resb    1  ;reserve one byte</span><br><span class="line">variableName2:      resw    1  ;reserve one word</span><br><span class="line">variableName3:      resd    1  ;reserve one double word</span><br><span class="line">variableName4:      resq    1  ;reserve one quad word</span><br><span class="line">variableName5:      rest    1  ;reserve one extended precision float</span><br></pre></td></tr></table></figure>
+
+<h2 id="sys-read"><a href="#sys-read" class="headerlink" title="sys_read"></a>sys_read</h2><ul>
+<li><code>eax</code>  3 </li>
+<li><code>ebx</code> 0 :  read from file descriptor STDIN</li>
+<li><code>ecx</code> :  address of the reserved space</li>
+<li><code>edx</code> :  number of  bytes to read</li>
+</ul>
+<h1 id="Chapter-11"><a href="#Chapter-11" class="headerlink" title="Chapter 11"></a>Chapter 11</h1><h2 id="div-unsigned-division"><a href="#div-unsigned-division" class="headerlink" title="div (unsigned division)"></a>div (unsigned division)</h2><p>$dest ← dest \div source$</p>
+<table>
+<thead>
+<tr>
+<th>Dividend</th>
+<th>Divisor</th>
+<th>Quotient</th>
+<th>Remainder</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AX</td>
+<td>r/m8</td>
+<td>AL</td>
+<td>AH</td>
+</tr>
+<tr>
+<td>DX:AX</td>
+<td>r/m16</td>
+<td>AX</td>
+<td>DX</td>
+</tr>
+<tr>
+<td>EDX:EAX</td>
+<td>r/m32</td>
+<td>EAX</td>
+<td>EDX</td>
+</tr>
+<tr>
+<td>RDX:RAX</td>
+<td>r/m64</td>
+<td>RAX</td>
+<td>RDX</td>
+</tr>
+</tbody></table>
+<p>Example</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">SECTION .data</span><br><span class="line">dividend        dq      0000000800300020h</span><br><span class="line">divisor         dd      00000100h</span><br><span class="line"></span><br><span class="line">SECTION .text</span><br><span class="line">  global _start</span><br><span class="line"></span><br><span class="line">_start:</span><br><span class="line">  mov   edx, [dividend+4]</span><br><span class="line">  mov   eax, [dividend]</span><br><span class="line">  div   dword [divisor]	; need to specify the size of the content by using memory address</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>idiv (Signed divide)</strong></li>
+</ul>
+<h1 id="Chapter-12"><a href="#Chapter-12" class="headerlink" title="Chapter 12"></a>Chapter 12</h1><p><code>add dest, source</code> </p>
+<p>   $dest ← dest + source$</p>
+<ul>
+<li><p>EFLAGS are set according to the result</p>
+</li>
+<li><p>Check <span class="exturl" data-url="aHR0cHM6Ly93d3cubmFzbS51cy94ZG9jLzIuMDkuMDcvaHRtbC9uYXNtZG9jYi5odG1sI3NlY3Rpb24tQi4xLjI=" title="https://www.nasm.us/xdoc/2.09.07/html/nasmdocb.html#section-B.1.2">this table<i class="fa fa-external-link"></i></span> to find available combination of dest and source</p>
+</li>
+</ul>
+<h1 id="Chapter-13"><a href="#Chapter-13" class="headerlink" title="Chapter 13"></a>Chapter 13</h1><p><code>sub dest, source</code>   </p>
+<p>  $dest ← dest - source$</p>
+<h1 id="Chapter-14"><a href="#Chapter-14" class="headerlink" title="Chapter 14"></a>Chapter 14</h1><p><code>mul src</code>  </p>
+<p> $eax ← eax \times src$</p>
+<h1 id="Chapter-16"><a href="#Chapter-16" class="headerlink" title="Chapter 16"></a>Chapter 16</h1><h2 id="Initial-Process-Stack"><a href="#Initial-Process-Stack" class="headerlink" title="Initial Process Stack"></a>Initial Process Stack</h2><p>當主程式開始前，OS(exec)會先初始化stack，使其包含一些重要的資訊，如下：</p>
+<table>
+<thead>
+<tr>
+<th align="center">High Address</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">other system stuff</td>
+</tr>
+<tr>
+<td align="center">…</td>
+</tr>
+<tr>
+<td align="center"><span class="exturl" data-url="aHR0cDovL2FydGljbGVzLm1hbnVnYXJnLmNvbS9hYm91dGVsZmF1eGlsaWFyeXZlY3RvcnMuaHRtbA==" title="http://articles.manugarg.com/aboutelfauxiliaryvectors.html">Auxiliary Vectors<i class="fa fa-external-link"></i></span>    <em>4 words each</em></td>
+</tr>
+<tr>
+<td align="center">Zero doubleword</td>
+</tr>
+<tr>
+<td align="center">Address of last environment argument</td>
+</tr>
+<tr>
+<td align="center">…</td>
+</tr>
+<tr>
+<td align="center">Address of environment argument 2</td>
+</tr>
+<tr>
+<td align="center">Address of environment argument 1   <em>doubleword</em></td>
+</tr>
+<tr>
+<td align="center">Zero doubleword</td>
+</tr>
+<tr>
+<td align="center">Address of Last Argument</td>
+</tr>
+<tr>
+<td align="center">…</td>
+</tr>
+<tr>
+<td align="center">Address of Argument 2</td>
+</tr>
+<tr>
+<td align="center">Address of Argument 1   <em>doubleword</em></td>
+</tr>
+<tr>
+<td align="center">Argument Count [<strong>esp</strong>]   <em>doubleword</em></td>
+</tr>
+<tr>
+<td align="center">Low Address</td>
+</tr>
+</tbody></table>
+<p><strong>esp的位址</strong>一開始會存放argument的總數。而接下來存放的都是各argument的位址。Argument1預設是放置該程式的路徑，所以user輸入的參數會是從Argument2開始。</p>
+<p>在tutorial中，利用pop可以依序得到user輸入的command line argument。</p>
+<p>Reference <span class="exturl" data-url="aHR0cDovL3JlZnNwZWNzLmxpbnV4Zm91bmRhdGlvbi5vcmcvRUxGL3pTZXJpZXMvbHpzYWJpMF96U2VyaWVzL3g4OTUuaHRtbA==" title="http://refspecs.linuxfoundation.org/ELF/zSeries/lzsabi0_zSeries/x895.html">1<i class="fa fa-external-link"></i></span>  <span class="exturl" data-url="aHR0cHM6Ly93d3cuZHJlYW1pbmNvZGUubmV0L2ZvcnVtcy90b3BpYy8yODU1NTAtbmFzbS1saW51eC1nZXR0aW5nLWNvbW1hbmQtbGluZS1wYXJhbWV0ZXJzLw==" title="https://www.dreamincode.net/forums/topic/285550-nasm-linux-getting-command-line-parameters/">2<i class="fa fa-external-link"></i></span></p>
+<h2 id="Set-register-to-zero"><a href="#Set-register-to-zero" class="headerlink" title="Set register to zero"></a>Set register to zero</h2><p><code>xor reg, reg</code>  該instruction是比較建議的方式來將register歸零，而非<code>mov reg, 0</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">xor     reg          </span><br><span class="line">     10110110</span><br><span class="line">     10110110</span><br><span class="line">   ------------</span><br><span class="line">     00000000</span><br></pre></td></tr></table></figure>
+
+<p> <span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9hLzMzNjY4Mjk1LzY3NDI2OTE=" title="https://stackoverflow.com/a/33668295/6742691">Refer<i class="fa fa-external-link"></i></span></p>
+<h2 id="在gdb中輸入command-line-argument"><a href="#在gdb中輸入command-line-argument" class="headerlink" title="在gdb中輸入command line argument"></a>在gdb中輸入command line argument</h2><p><code>gdb --args  executable_name   arg1  arg2  arg3</code></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvNjEyMTA5NC9ob3ctZG8taS1ydW4tYS1wcm9ncmFtLXdpdGgtY29tbWFuZGxpbmUtYXJndW1lbnRzLXVzaW5nLWdkYi13aXRoaW4tYS1iYXNoLXNjcmlwdA==" title="https://stackoverflow.com/questions/6121094/how-do-i-run-a-program-with-commandline-arguments-using-gdb-within-a-bash-script">Refer<i class="fa fa-external-link"></i></span></p>
+<h1 id="Chapter-17"><a href="#Chapter-17" class="headerlink" title="Chapter 17"></a>Chapter 17</h1><h2 id="local-labels"><a href="#local-labels" class="headerlink" title="local labels"></a>local labels</h2><p>透過namespace使相同名字的label能夠重複使用，如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">label1:  </span><br><span class="line">    .loop:  </span><br><span class="line">       ...  </span><br><span class="line">       jmp .loop			;這會跳到label1底下的.loop而非label2底下的.loop</span><br><span class="line">  </span><br><span class="line">label2:</span><br><span class="line">    .loop:  </span><br><span class="line">       ...  </span><br><span class="line">       jmp .loop  </span><br><span class="line">  </span><br><span class="line">jmp label1.loop		;當從其他地方要呼叫時，只要將global label(namespace)配上local label即可access</span><br></pre></td></tr></table></figure>
+
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cudG9ydGFsbC5uZXQvcHJvamVjdHMveWFzbS9tYW51YWwvaHRtbC9uYXNtLWxvY2FsLWxhYmVsLmh0bWw=" title="https://www.tortall.net/projects/yasm/manual/html/nasm-local-label.html">Reference<i class="fa fa-external-link"></i></span></p>
+<h1 id="Chapter-19"><a href="#Chapter-19" class="headerlink" title="Chapter 19"></a>Chapter 19</h1><h2 id="sys-execve"><a href="#sys-execve" class="headerlink" title="sys_execve"></a>sys_execve</h2><p><em>executes a new program.</em></p>
+<p><code>eax</code>  11</p>
+<p><code>ebx</code>  address of the file </p>
+<p><code>ecx</code>  address of arguments</p>
+<p><code>edx</code>  address of the environment variables</p>
+<p>the address points to the variable in the section .data</p>
+<p>（其實該函數可以討論的更深，但我覺得之後研究OS再深入做筆記）</p>
+<h1 id="Chapter-20"><a href="#Chapter-20" class="headerlink" title="Chapter 20"></a>Chapter 20</h1><h2 id="sys-fork"><a href="#sys-fork" class="headerlink" title="sys_fork"></a>sys_fork</h2><p><em>invoke a child process</em></p>
+<p><code>eax</code>  2</p>
+<p>After invoking sys_fork, if <code>eax</code>  is 0, then it implies that the current process is a child process.</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NASM/" rel="tag"># NASM</a>
+          
+            <a href="/tags/Assembly/" rel="tag"># Assembly</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/30/Notes for Computer Networking 6e/" rel="next" title="Notes for Computer Networking 6e">
+                <i class="fa fa-chevron-left"></i> Notes for Computer Networking 6e
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/assets/profile.jpeg" alt="KT Shen">
+            
+              <p class="site-author-name" itemprop="name">KT Shen</p>
+              <div class="site-description motion-element" itemprop="description">Just some thoughts and notes.</div>
+          </div>
+
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2t0c2hlbg==" title="GitHub &rarr; https://github.com/ktshen"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="bWFpbHRvOmt0c2hlbi50d0BnbWFpbC5jb20=" title="Mail &rarr; mailto:ktshen.tw@gmail.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly93d3cuZmFjZWJvb2suY29tL2t0c2hlbnR3" title="Facebook &rarr; https://www.facebook.com/ktshentw"><i class="fa fa-fw fa-facebook"></i>Facebook</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9pbnN0YWdyYW0uY29tL2t0c2hlbnR3" title="Instagram &rarr; https://instagram.com/ktshentw"><i class="fa fa-fw fa-instagram"></i>Instagram</span>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Chapter-1-amp-2"><span class="nav-number">1.</span> <span class="nav-text">Chapter 1 &amp; 2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#NASM-Data-Type"><span class="nav-number">1.1.</span> <span class="nav-text">NASM Data Type</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#global-directive"><span class="nav-number">1.2.</span> <span class="nav-text">global directive</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#int-80h-amp-syscall"><span class="nav-number">1.3.</span> <span class="nav-text">int 80h &amp; syscall</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CR-LF"><span class="nav-number">1.4.</span> <span class="nav-text">CR/LF</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Chapter-3"><span class="nav-number">2.</span> <span class="nav-text">Chapter 3</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CMP"><span class="nav-number">2.1.</span> <span class="nav-text">CMP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JZ"><span class="nav-number">2.2.</span> <span class="nav-text">JZ</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#INC"><span class="nav-number">2.3.</span> <span class="nav-text">INC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EFLAGS-Register"><span class="nav-number">2.4.</span> <span class="nav-text">EFLAGS Register</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Zero-Flag"><span class="nav-number">2.4.1.</span> <span class="nav-text">Zero Flag</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Carry-Flag"><span class="nav-number">2.4.2.</span> <span class="nav-text">Carry Flag</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Overflow-Flag"><span class="nav-number">2.4.3.</span> <span class="nav-text">Overflow Flag</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Auxiliary-Flag"><span class="nav-number">2.4.4.</span> <span class="nav-text">Auxiliary Flag</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sign-Flag"><span class="nav-number">2.4.5.</span> <span class="nav-text">Sign Flag</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Parity-Flag"><span class="nav-number">2.4.6.</span> <span class="nav-text">Parity Flag</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Chapter-5"><span class="nav-number">3.</span> <span class="nav-text">Chapter 5</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Chapter-6"><span class="nav-number">4.</span> <span class="nav-text">Chapter 6</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Chapter-9"><span class="nav-number">5.</span> <span class="nav-text">Chapter 9</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Section-bss"><span class="nav-number">5.1.</span> <span class="nav-text">Section .bss</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sys-read"><span class="nav-number">5.2.</span> <span class="nav-text">sys_read</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Chapter-11"><span class="nav-number">6.</span> <span class="nav-text">Chapter 11</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#div-unsigned-division"><span class="nav-number">6.1.</span> <span class="nav-text">div (unsigned division)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Chapter-12"><span class="nav-number">7.</span> <span class="nav-text">Chapter 12</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Chapter-13"><span class="nav-number">8.</span> <span class="nav-text">Chapter 13</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Chapter-14"><span class="nav-number">9.</span> <span class="nav-text">Chapter 14</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Chapter-16"><span class="nav-number">10.</span> <span class="nav-text">Chapter 16</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Initial-Process-Stack"><span class="nav-number">10.1.</span> <span class="nav-text">Initial Process Stack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Set-register-to-zero"><span class="nav-number">10.2.</span> <span class="nav-text">Set register to zero</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在gdb中輸入command-line-argument"><span class="nav-number">10.3.</span> <span class="nav-text">在gdb中輸入command line argument</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Chapter-17"><span class="nav-number">11.</span> <span class="nav-text">Chapter 17</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#local-labels"><span class="nav-number">11.1.</span> <span class="nav-text">local labels</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Chapter-19"><span class="nav-number">12.</span> <span class="nav-text">Chapter 19</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sys-execve"><span class="nav-number">12.1.</span> <span class="nav-text">sys_execve</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Chapter-20"><span class="nav-number">13.</span> <span class="nav-text">Chapter 20</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sys-fork"><span class="nav-number">13.1.</span> <span class="nav-text">sys_fork</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KT Shen</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom">隱約雷鳴，陰霾天空，但盼風雨來，能留你在此</div>
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.1"></script>
+
+  <script src="/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.1"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.1"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.1"></script>
+<script src="/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+  <script src="/js/exturl.js?v=7.1.1"></script>
+
+
+  
+
+  
+  
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://ktshentw.tk/2019/05/20/Notes for better_tutorial in Nasm/";
+    this.page.identifier = "2019/05/20/Notes for better_tutorial in Nasm/";
+    this.page.title = 'Notes for better_tutorial in Nasm';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://ktshentw-tk.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    loadComments();
+  
+</script>
+
+
+
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
